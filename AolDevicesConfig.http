@@ -1,0 +1,6 @@
+@AolDevicesConfig_HostAddress = http://localhost:5020
+
+GET {{AolDevicesConfig_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
