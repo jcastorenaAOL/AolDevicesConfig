@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AolDevicesConfig.Migrations
 {
     [DbContext(typeof(ConfigContext))]
-    [Migration("20240906175549_parameters")]
-    partial class parameters
+    [Migration("20240927174155_First")]
+    partial class First
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,7 @@ namespace AolDevicesConfig.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ParameterName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -76,14 +77,56 @@ namespace AolDevicesConfig.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("PID")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("PIDConfig")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("ConfigID");
 
                     b.ToTable("DeviceConfigurations");
+                });
+
+            modelBuilder.Entity("AolDevicesConfig.GamepadLayout", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("LayoutName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GamepadLayouts");
+                });
+
+            modelBuilder.Entity("AolDevicesConfig.LayoutComponent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GamepadLayoutId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Index")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GamepadLayoutId");
+
+                    b.ToTable("LayoutComponents");
                 });
 
             modelBuilder.Entity("AolDevicesConfig.DeviceConfigParameter", b =>
@@ -103,6 +146,22 @@ namespace AolDevicesConfig.Migrations
                     b.Navigation("DeviceConfig");
 
                     b.Navigation("Parameter");
+                });
+
+            modelBuilder.Entity("AolDevicesConfig.LayoutComponent", b =>
+                {
+                    b.HasOne("AolDevicesConfig.GamepadLayout", "GamepadLayout")
+                        .WithMany("LayoutComponents")
+                        .HasForeignKey("GamepadLayoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GamepadLayout");
+                });
+
+            modelBuilder.Entity("AolDevicesConfig.GamepadLayout", b =>
+                {
+                    b.Navigation("LayoutComponents");
                 });
 #pragma warning restore 612, 618
         }

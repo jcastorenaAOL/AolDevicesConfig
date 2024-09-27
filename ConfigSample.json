@@ -1,6 +1,6 @@
 {
   "configID": 0,
   "pid": "Turtle Beach Stealth Ultra (Vendor: 2e2c Product: 7073)", 
-  "pidConfig" : "'Description' : 'Turtle Beach Recon Controller','width' : 250, 'height' : 250,'imgSrc' : 'src/img/reconblack.png'",
+  "pidConfig" : "{'Description' : 'Turtle Beach Recon Controller','width' : 250, 'height' : 250,'imgSrc' : 'src/img/reconblack.png'}",
   "createdOn": "2024-09-06T17:18:48.410Z"
 }

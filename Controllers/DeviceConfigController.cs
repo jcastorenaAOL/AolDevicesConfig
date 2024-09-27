@@ -18,8 +18,14 @@ namespace MyApp.Namespace
         [HttpPost("SaveDeviceConfig")]
         public async Task<IActionResult> SaveConfig(DeviceConfiguration config)
         {
-
-            await  _deviceConfigContext.DeviceConfigurations.AddAsync(config);
+            var devConf = _deviceConfigContext.DeviceConfigurations.FirstOrDefault(q => q.PID == config.PID);
+            if(devConf != null ){
+                devConf.PIDConfig = config.PIDConfig;
+            } 
+            else{
+                await  _deviceConfigContext.DeviceConfigurations.AddAsync(config);
+            }
+            
             var result = await _deviceConfigContext.SaveChangesAsync();
 
             return Ok(result);

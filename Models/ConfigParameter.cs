@@ -2,10 +2,13 @@
 
 namespace AolDevicesConfig;
 
+
 public class ConfigParameter
 {
 
     [Key]
-    public int Id {get; set;}
-    public string? ParameterName {get; set;}
+    public int Id { get; set; }
+    [Required]
+    public string? ParameterName { get; set; }
+
 }
